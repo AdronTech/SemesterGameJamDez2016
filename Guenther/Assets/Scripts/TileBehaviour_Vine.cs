@@ -56,7 +56,7 @@ public class TileBehaviour_Vine : MonoBehaviour{
             // back to spring
             yield return new WaitUntil(isSpring);
         }
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject, 0.01f);
     }
 
     private bool isTopVine()
