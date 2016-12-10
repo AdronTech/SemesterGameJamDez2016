@@ -1,8 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+
 public class TileBehaviour_Wasser : MonoBehaviour {
+
+    public Sprite eisSprite;
+    public Sprite wasserSprite;
 
 	// Use this for initialization
 	void Start () {
@@ -11,10 +14,19 @@ public class TileBehaviour_Wasser : MonoBehaviour {
 	
     IEnumerator TileLife()
     {
-        System.Func<bool> isWinter = () => Player.actualSeason == Player.seasons.winter;
-        yield return new WaitUntil(isWinter);
-        // change to winter
-        yield return new WaitWhile(isWinter);
+        System.Func<bool> isWinter = () => Player.actualSeason == Player.Seasons.Winter;
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        while (true)
+        {
+            yield return new WaitWhile(isWinter);
+            tag = "water";
+            
+
+            yield return new WaitUntil(isWinter);
+            tag = "frozen";
+
+        }
+
     }
 
 }
