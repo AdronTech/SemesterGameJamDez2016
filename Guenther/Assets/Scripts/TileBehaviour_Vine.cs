@@ -34,16 +34,21 @@ public class TileBehaviour_Vine : MonoBehaviour {
     private void changeState() {
         switch (curState) {
             case State.Growing:
-                RaycastHit2D upperBounding = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.75f), Vector2.up, 0.2f);
+                gameObject.GetComponent<MeshRenderer>().enabled = true;
+                gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                RaycastHit2D upperBounding = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.up, 1f);
                 Debug.DrawRay(transform.position, Vector3.up);
                 if (!upperBounding) {
                     Instantiate(Vine, new Vector2(transform.position.x, transform.position.y + 1f), Quaternion.Euler(0, 0, 0));
                 }
                 break;
             case State.Burning:
-                
+                if (gameObject.tag != "Vine")
+                    Destroy(gameObject);
                 break;
             case State.None:
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 break;
             default:
                 break;
