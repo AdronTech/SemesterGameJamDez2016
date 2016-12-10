@@ -23,7 +23,7 @@ sysinfo.txt
 /*.unityproj
 /*.booproj
 /.idea*/
-*.CSharp.csproj
+*.csproj
 /*.suo
  
 # ============ #
