@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.UI;
 
 public class MainMenuButtons : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class MainMenuButtons : MonoBehaviour {
     //array erstellen
     //array aus szenen
     //so viele buttons erstellen
+
+    public static Text text;
 
     string[] levelArray;
 
@@ -58,12 +61,14 @@ public class MainMenuButtons : MonoBehaviour {
 
         for(int i = 0; i < levelArray.Length; i++){
 
-            GUI.Label(new Rect(0 + i*10, 0, 100, 100), "I'm a GUI");
+            //GUI.Label(new Rect(0 + i*10, 0, 100, 100), "I'm a GUI");
 
             //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
-            if (GUI.Button(new Rect(10, 10, 150, 100), "Click")) {
-            Debug.Log("Button Clicked");
-        }
+            if (GUI.Button(new Rect(165 + 12 + (-165 + (165 *i)), 100 , 160, 90), "Click")) {
+            Debug.Log("Button" + i +" Clicked");
+                Debug.Log("Button" + i + " Clicked");
+                Debug.Log("Button" + i + " Clicked");
+            }          
 
         }
     }
@@ -71,6 +76,8 @@ public class MainMenuButtons : MonoBehaviour {
     // Use this for initialization
     void Start() {
         OnGUI();
+
+        
     }
 
     // Update is called once per frame
