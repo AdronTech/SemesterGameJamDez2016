@@ -13,10 +13,13 @@ public class MainMenuButtons : MonoBehaviour {
     //array erstellen
     //array aus szenen
     //so viele buttons erstellen
-    
-    private static Text button0text;
-    private static Text button1text;
-    private static Text button2text;
+
+    private Text[] Buttons = new Text[3];
+   
+       
+    //private static Text button0text;
+    //private static Text button1text;
+    //private static Text button2text;
 
     private static int isDown = -1;
 
@@ -50,7 +53,7 @@ public class MainMenuButtons : MonoBehaviour {
 
         int j = 0;
         //jedes zweite ist .meta -> brauch ich nicht
-        for (i = 0; i < length / 2; i = i + 2) {
+        for (i = 0; i < (length); i = i + 2) {
             levelArray[j] = (tmp[i].Split('.'))[0];
             Debug.Log(levelArray[j]); //alle namen deer Szenen enthalten
             j++;
@@ -71,30 +74,31 @@ public class MainMenuButtons : MonoBehaviour {
                 isDown = i;
                 switch (i)
                 {
-                    case 0: button0text.enabled = true; button1text.enabled = false; button2text.enabled = false;  break;
-                    case 1: button1text.enabled = true; button0text.enabled = false; button2text.enabled = false; break;
-                    case 2: button2text.enabled = true; button0text.enabled = false; button1text.enabled = false; break;
+                    case 0: Buttons[0].enabled = true; Buttons[1].enabled = false; Buttons[2].enabled = false;  break;
+                    case 1: Buttons[1].enabled = true; Buttons[0].enabled = false; Buttons[2].enabled = false; break;
+                    case 2: Buttons[2].enabled = true; Buttons[0].enabled = false; Buttons[1].enabled = false; break;
                     default: break;
                 }              
             } 
         }        
     }
 
-    public void LoadByIndex(int buttonnr)
+    public void LoadByIndex()
     {
-        SceneManager.LoadScene(levelArray[buttonnr]);
+        if(isDown!=-1)
+        SceneManager.LoadScene(levelArray[isDown]);
     }
 
     // Use this for initialization
     void Start() {
 
-        button0text = this.transform.GetChild(2).GetComponent<Text>();
-        button1text = this.transform.GetChild(3).GetComponent<Text>();
-        button2text = this.transform.GetChild(4).GetComponent<Text>();
+        Buttons[0] = this.transform.GetChild(2).GetComponent<Text>();
+        Buttons[1] = this.transform.GetChild(3).GetComponent<Text>();
+        Buttons[2] = this.transform.GetChild(4).GetComponent<Text>();
 
-        button0text.enabled = false;
-        button1text.enabled = false;       
-        button2text.enabled = false;
+        Buttons[0].enabled = false;
+        Buttons[1].enabled = false;
+        Buttons[2].enabled = false;
 
         OnGUI();        
     }
