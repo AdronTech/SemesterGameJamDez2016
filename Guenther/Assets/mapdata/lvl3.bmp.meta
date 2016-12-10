@@ -1,14 +1,24 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 98ddbd94686845d4481e791e76fab188
 timeCreated: 1481346153
+=======
+guid: 3d9d8294d10143d48bbdf738e765a405
+timeCreated: 1481346534
+>>>>>>> master
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
+<<<<<<< HEAD
     enableMipMap: 0
     sRGBTexture: 0
+=======
+    enableMipMap: 1
+    sRGBTexture: 1
+>>>>>>> master
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -19,7 +29,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+<<<<<<< HEAD
   isReadable: 1
+=======
+  isReadable: 0
+>>>>>>> master
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -31,7 +45,11 @@ TextureImporter:
     aniso: -1
     mipBias: -1
     wrapMode: -1
+<<<<<<< HEAD
   nPOTScale: 0
+=======
+  nPOTScale: 1
+>>>>>>> master
   lightmap: 0
   compressionQuality: 50
   spriteMode: 0
@@ -41,7 +59,11 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+<<<<<<< HEAD
   alphaUsage: 0
+=======
+  alphaUsage: 1
+>>>>>>> master
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 0
@@ -58,6 +80,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
   - buildTarget: Standalone
     maxTextureSize: 2048
     textureFormat: -1
@@ -66,6 +89,8 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+=======
+>>>>>>> master
   spriteSheet:
     serializedVersion: 2
     sprites: []
