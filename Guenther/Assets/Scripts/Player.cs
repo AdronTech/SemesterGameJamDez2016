@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void Spawn() {
+    public void Spawn() {
         transform.position = spawnPoint.position;
     }
 
