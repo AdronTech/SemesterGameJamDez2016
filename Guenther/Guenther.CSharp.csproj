@@ -18,10 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.0f3</UnityVersion>
     <RootNamespace></RootNamespace>
-<<<<<<< Updated upstream
-=======
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
->>>>>>> Stashed changes
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -87,7 +84,6 @@
     <Compile Include="Assets\Scripts\TileBehaviour_Grass.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Spawn.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Vine.cs" />
-    <Compile Include="Assets\Scripts\TileBehaviour_Wasser.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Water.cs" />
     <Compile Include="Assets\mapgen\MapGen.cs" />
   </ItemGroup>
