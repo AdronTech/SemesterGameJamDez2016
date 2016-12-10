@@ -13,8 +13,12 @@ public class MainMenuButtons : MonoBehaviour {
     //array erstellen
     //array aus szenen
     //so viele buttons erstellen
+    
+    private static Text button0text;
+    private static Text button1text;
+    private static Text button2text;
 
-    public static Text text;
+    private static int isDown = -1;
 
     string[] levelArray;
 
@@ -55,8 +59,7 @@ public class MainMenuButtons : MonoBehaviour {
        
     }
 
-    void OnGUI() {
-        
+   private void OnGUI() {  
 
 
         for(int i = 0; i < levelArray.Length; i++){
@@ -65,19 +68,35 @@ public class MainMenuButtons : MonoBehaviour {
 
             //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
             if (GUI.Button(new Rect(165 + 12 + (-165 + (165 *i)), 100 , 160, 90), "Click")) {
-            Debug.Log("Button" + i +" Clicked");
-                Debug.Log("Button" + i + " Clicked");
-                Debug.Log("Button" + i + " Clicked");
-            }          
+                isDown = i;
+                switch (i)
+                {
+                    case 0: button0text.enabled = true; button1text.enabled = false; button2text.enabled = false;  break;
+                    case 1: button1text.enabled = true; button0text.enabled = false; button2text.enabled = false; break;
+                    case 2: button2text.enabled = true; button0text.enabled = false; button1text.enabled = false; break;
+                    default: break;
+                }              
+            } 
+        }        
+    }
 
-        }
+    public void LoadByIndex(int buttonnr)
+    {
+        SceneManager.LoadScene(levelArray[buttonnr]);
     }
 
     // Use this for initialization
     void Start() {
-        OnGUI();
 
-        
+        button0text = this.transform.GetChild(2).GetComponent<Text>();
+        button1text = this.transform.GetChild(3).GetComponent<Text>();
+        button2text = this.transform.GetChild(4).GetComponent<Text>();
+
+        button0text.enabled = false;
+        button1text.enabled = false;       
+        button2text.enabled = false;
+
+        OnGUI();        
     }
 
     // Update is called once per frame
