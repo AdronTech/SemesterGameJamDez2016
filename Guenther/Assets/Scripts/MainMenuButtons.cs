@@ -80,9 +80,10 @@ public class MainMenuButtons : MonoBehaviour {
         }        
     }
 
-    public void LoadByIndex(int buttonnr)
+    public void LoadByIndex()
     {
-        SceneManager.LoadScene(levelArray[buttonnr]);
+        if(isDown!=-1)
+        SceneManager.LoadScene(levelArray[isDown]);
     }
 
     // Use this for initialization
