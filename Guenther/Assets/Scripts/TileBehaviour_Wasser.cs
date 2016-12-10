@@ -6,13 +6,15 @@ public class TileBehaviour_Wasser : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        StartCoroutine(TileLife());
 	}
 	
     IEnumerator TileLife()
     {
-
-        yield return null;
+        System.Func<bool> isWinter = () => Player.actualSeason == Player.seasons.winter;
+        yield return new WaitUntil(isWinter);
+        // change to winter
+        yield return new WaitWhile(isWinter);
     }
 
 }
