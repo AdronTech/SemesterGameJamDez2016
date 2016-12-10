@@ -25,7 +25,6 @@ public class TileBehaviour_Vine : MonoBehaviour{
             {
                 // check if there is anything above me
                 hit = Physics2D.Raycast(transform.position, Vector2.up, 1f);
-                Vector2 growPos = transform.position + Vector3.up;
                 if (hit || !isSpring()) { }
                 else
                 {
