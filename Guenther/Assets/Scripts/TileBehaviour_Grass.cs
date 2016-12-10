@@ -63,7 +63,7 @@ public class TileBehaviour_Grass : MonoBehaviour, ITile {
     {
         if (sr != null)
         {
-            sr.color = Color.Lerp(sr.color, c, 0.01f);
+            sr.color = Color.Lerp(sr.color, c, 0.05f);
         }
     }
 }
