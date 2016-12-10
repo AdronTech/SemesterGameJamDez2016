@@ -4,38 +4,51 @@ using UnityEngine;
 
 public class TileBehaviour_Bush : MonoBehaviour {
 
+    public Material leaf, fire;
+
     private int lastSeason = 0;
     private enum State { None, Burning };
     private State curState = State.None;
     private Dictionary<Player.Seasons, State> states = new Dictionary<Player.Seasons, State>();
+    private ParticleSystem ps;
 
     void Awake() {
-        states.Add(Player.Seasons.Spring, State.None);
-        states.Add(Player.Seasons.Summer, State.Burning);
-        states.Add(Player.Seasons.Autumn, State.None);
-        states.Add(Player.Seasons.Winter, State.None);
     }
 
-    void Start() {
-        curState = states[Player.actualSeason];
-        changeState();
+    void Start()
+    {
+        StartCoroutine(TileLife());
     }
 
-    void Update() {
-        if (lastSeason != (int)Player.actualSeason) {
-            curState = states[Player.actualSeason];
-            changeState();
+    IEnumerator TileLife()
+    {
+        while(true)
+        {
+            switch(Player.actualSeason)
+            {
+                case Player.Seasons.Summer:
+                    transform.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                    break;
+                case Player.Seasons.Spring:
+                    transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                    break;
+                case Player.Seasons.Autumn:
+                case Player.Seasons.Winter:
+                    transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                    break;
+            }
+
+            yield return 0;
+
         }
-        lastSeason = (int)Player.actualSeason;
     }
-
     private void changeState() {
         switch (curState) {
             case State.Burning:
-                transform.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                
                 break;
             case State.None:
-                transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                
                 break;
             default:
                 break;
