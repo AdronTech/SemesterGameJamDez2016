@@ -111,10 +111,19 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         death = other.gameObject.tag == "death";
-        if(other.gameObject.tag == "apple")
+        if (other.gameObject.tag == "apple")
         {
             appleCount++;
             Destroy(other);
+        }
+        if (other.GetComponent<TileBehaviour_Vine>()) {
+            Physics2D.gravity = new Vector2(0f, 0f);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.GetComponent<TileBehaviour_Vine>()) {
+            Physics2D.gravity = new Vector2(0f, -9.81f);
         }
     }
 
