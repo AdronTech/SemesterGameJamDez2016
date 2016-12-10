@@ -94,6 +94,6 @@ public class TileBehaviour_Vine : MonoBehaviour{
 
     void OnDeath()
     {
-        StopAllCoroutines();
+        StopAllCoroutines(); 
     }
 }
