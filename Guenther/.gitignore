@@ -23,6 +23,8 @@ sysinfo.txt
 /*.unityproj
 /*.booproj
 /.idea*/
+*.CSharp.csproj
+/*.suo
  
 # ============ #
 # OS generated #
