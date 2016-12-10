@@ -4,11 +4,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour {
-    public enum seasons { spring, summer, autumn, winter };
+    public enum Seasons { Spring, Summer, Autumn, Winter };
     public MoveSettings moveSettings;
     public InputSettings inputSettings;
     public Transform spawnPoint;
-    public static seasons actualSeason;
+    public static Seasons actualSeason;
     private float sidewaysInput;
     private float jumpInput;
     private GameObject player;
@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
     private void Awake() {
         sidewaysInput = jumpInput = 0;
         player = this.gameObject;
-        actualSeason = seasons.spring;
+        actualSeason = Seasons.Spring;
     }
 
     void Update() {
@@ -29,18 +29,25 @@ public class Player : MonoBehaviour {
     void GetPlayerInput() {
         sidewaysInput = Input.GetAxis(inputSettings.PLAYER_SIDEWAYS_AXIS);
         jumpInput = Input.GetAxisRaw(inputSettings.PLAYER_JUMP_AXIS);
+
+        // change the season
+        if (Input.GetAxis(inputSettings.PLAYER_SEASON_CHANGE) != 0) {
+            actualSeason++;
+        }
     }
 
     void Spawn() {
         transform.position = spawnPoint.position;
     }
+    
+
     void Run() {
         velocity = new Vector3(sidewaysInput * moveSettings.RunVelocity, player.GetComponent<Rigidbody2D>().velocity.y);
         player.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(velocity);
     }
 
     void Jump() {
-        if (jumpInput != 0 && playerGrounded()) {
+        if (jumpInput > 0 && playerGrounded()) {
             player.GetComponent<Rigidbody2D>().velocity = new Vector3(player.GetComponent<Rigidbody2D>().velocity.x, moveSettings.JumpVelocity, velocity.z);
         }
     }
@@ -67,6 +74,7 @@ public class Player : MonoBehaviour {
     [System.Serializable]
     public class InputSettings {
         public string PLAYER_SIDEWAYS_AXIS = "Horizontal";
-        public string PLAYER_JUMP_AXIS = "Jump";
+        public string PLAYER_JUMP_AXIS = "Vertical";
+        public string PLAYER_SEASON_CHANGE = "Jump";
     }
 }
