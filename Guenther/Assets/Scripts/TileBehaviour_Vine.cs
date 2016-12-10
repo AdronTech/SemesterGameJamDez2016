@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileBehaviour_Vine : MonoBehaviour {
+public class TileBehaviour_Vine : MonoBehaviour, ITile {
 
     public GameObject Vine;
     private int lastSeason = 0;
@@ -22,7 +23,6 @@ public class TileBehaviour_Vine : MonoBehaviour {
         changeState();
     }
 
-    // Use this for initialization
     void Update() {
         if (lastSeason != (int)Player.actualSeason) {
             curState = states[Player.actualSeason];
@@ -53,5 +53,10 @@ public class TileBehaviour_Vine : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    public void Init()
+    {
+        throw new NotImplementedException();
     }
 }

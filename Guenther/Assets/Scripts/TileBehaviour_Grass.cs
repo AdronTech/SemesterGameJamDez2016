@@ -7,9 +7,12 @@ public class TileBehaviour_Grass : MonoBehaviour, ITile {
     public Sprite grass;
     private SpriteRenderer sr;
 
-    // Use this for initialization
-    void Awake()
+    void Start()
     {
+        Transform grass = transform.FindChild("Grass");
+        if (grass != null)
+            sr = grass.GetComponent<SpriteRenderer>();
+
         StartCoroutine(TileLife());
     }
 
@@ -20,11 +23,11 @@ public class TileBehaviour_Grass : MonoBehaviour, ITile {
         if (!(hit && hit.collider.GetComponent<TileBehaviour_Base>() != null))
         {
             GameObject go = new GameObject("Grass");
-            sr = go.AddComponent<SpriteRenderer>();
+            sr = go.AddComponent<SpriteRenderer>(); 
             go.transform.SetParent(transform);
             go.transform.position = transform.position;
-            sr.sortingOrder = transform.childCount;
 
+            sr.sortingOrder = transform.childCount;
             sr.sprite = grass;
         }
 
@@ -32,10 +35,9 @@ public class TileBehaviour_Grass : MonoBehaviour, ITile {
 
     IEnumerator TileLife()
     {
-        Color c = Color.white;
+        Color c = Color.green;
         while (true)
         {
-
             switch (Player.actualSeason)
             {
                 case Player.Seasons.Winter:
@@ -60,6 +62,8 @@ public class TileBehaviour_Grass : MonoBehaviour, ITile {
     void ChangeColor(Color c)
     {
         if (sr != null)
-            sr.color = Color.Lerp(sr.color,c, 0.01f);
+        {
+            sr.color = Color.Lerp(sr.color, c, 0.01f);
+        }
     }
 }

@@ -37,6 +37,7 @@ public class Player : MonoBehaviour {
             if ((int)actualSeason == System.Enum.GetValues(typeof(Seasons)).Length) {
                 actualSeason = Seasons.Spring;
             }
+            Debug.Log(actualSeason);
         }
     }
 
