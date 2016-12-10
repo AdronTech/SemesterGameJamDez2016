@@ -23,6 +23,7 @@ public class TileBehaviour_Corn : MonoBehaviour {
         GameObject middleGo = new GameObject("Middle");
         middleRenderer = middleGo.AddComponent<SpriteRenderer>();
         middleGo.AddComponent<BoxCollider2D>();
+        middleGo.layer = 8;
         middleGo.transform.SetParent(transform);
         middleGo.transform.position = transform.position;
         middleTransform = middleGo.transform;
