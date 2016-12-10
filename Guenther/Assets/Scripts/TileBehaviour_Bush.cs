@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class TileBehaviour_Bush : MonoBehaviour {
 
-    public Material leaf, fire;
-
-    private int lastSeason = 0;
-    private enum State { None, Burning };
-    private State curState = State.None;
-    private Dictionary<Player.Seasons, State> states = new Dictionary<Player.Seasons, State>();
-    private ParticleSystem ps;
-
-    void Awake() {
-    }
+    public ParticleSystem leaf, fire;
 
     void Start()
     {
+        fire.Stop();
+        leaf.Stop();
         StartCoroutine(TileLife());
     }
 
@@ -24,34 +17,27 @@ public class TileBehaviour_Bush : MonoBehaviour {
     {
         while(true)
         {
-            switch(Player.actualSeason)
+            transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+            switch (Player.actualSeason)
             {
+                case Player.Seasons.Spring:
+                    leaf.Play();
+                    break;
                 case Player.Seasons.Summer:
                     transform.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                    break;
-                case Player.Seasons.Spring:
-                    transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                    leaf.Stop();
+                    fire.Play();
                     break;
                 case Player.Seasons.Autumn:
+                    fire.Stop();
+                    break;
                 case Player.Seasons.Winter:
-                    transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                     break;
             }
 
             yield return 0;
 
-        }
-    }
-    private void changeState() {
-        switch (curState) {
-            case State.Burning:
-                
-                break;
-            case State.None:
-                
-                break;
-            default:
-                break;
         }
     }
 }

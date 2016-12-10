@@ -75,12 +75,14 @@ public class TileBehaviour_Water : MonoBehaviour, ITile {
             {
                 case Player.Seasons.Winter:
                     icealpha = 1f;
+                    gameObject.layer = 8;
                     gameObject.tag = "Untagged";
                     break;
                 case Player.Seasons.Spring:
                 case Player.Seasons.Summer:
                 case Player.Seasons.Autumn:
                     icealpha = 0f;
+                    gameObject.layer = 0;
                     gameObject.tag = "death";
                     break;
             }
