@@ -49,24 +49,28 @@ public class MainMenuButtons : MonoBehaviour {
             j++;
         }
 
-        OnGUI();
+       
     }
 
     void OnGUI() {
+        
 
-        //for(int i = 0; i < levelArray.Length; i++){
 
-        //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
-        if (GUI.Button(new Rect(10, 10, 150, 100), "Click")) {
+        for(int i = 0; i < levelArray.Length; i++){
+
+            GUI.Label(new Rect(0 + i*10, 0, 100, 100), "I'm a GUI");
+
+            //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
+            if (GUI.Button(new Rect(10, 10, 150, 100), "Click")) {
             Debug.Log("Button Clicked");
         }
 
-        //}
+        }
     }
 
     // Use this for initialization
     void Start() {
-
+        OnGUI();
     }
 
     // Update is called once per frame
