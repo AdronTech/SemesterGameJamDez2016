@@ -18,7 +18,7 @@ public class MainMenuButtons : MonoBehaviour {
     private static Text button1text;
     private static Text button2text;
 
-    private static bool isDown = false;
+    private static int isDown = -1;
 
     string[] levelArray;
 
@@ -68,7 +68,7 @@ public class MainMenuButtons : MonoBehaviour {
 
             //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
             if (GUI.Button(new Rect(165 + 12 + (-165 + (165 *i)), 100 , 160, 90), "Click")) {
-                isDown = true;
+                isDown = i;
                 switch (i)
                 {
                     case 0: button0text.enabled = true; button1text.enabled = false; button2text.enabled = false;  break;
@@ -80,7 +80,10 @@ public class MainMenuButtons : MonoBehaviour {
         }        
     }
 
-    //public void 
+    public void LoadByIndex(int buttonnr)
+    {
+        SceneManager.LoadScene(levelArray[buttonnr]);
+    }
 
     // Use this for initialization
     void Start() {
