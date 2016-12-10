@@ -1,62 +1,99 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
-public class TileBehaviour_Vine : MonoBehaviour, ITile {
-
-    public GameObject Vine;
-    private int lastSeason = 0;
-    private enum State { None, Growing, Burning };
-    private State curState = State.None;
-    private Dictionary<Player.Seasons, State> states = new Dictionary<Player.Seasons, State>();
-
-    void Awake() {
-        states.Add(Player.Seasons.Spring, State.Growing);
-        states.Add(Player.Seasons.Summer, State.Burning);
-        states.Add(Player.Seasons.Autumn, State.None);
-        states.Add(Player.Seasons.Winter, State.None);
-    }
+public class TileBehaviour_Vine : MonoBehaviour{
+    public Sprite top, mid;
+    private SpriteRenderer render;
 
     void Start() {
-        curState = states[Player.actualSeason];
-        changeState();
-    }
-
-    void Update() {
-        if (lastSeason != (int)Player.actualSeason) {
-            curState = states[Player.actualSeason];
-            changeState();
+        render = GetComponent<SpriteRenderer>();
+        if (render == null)
+        {
+            render = gameObject.AddComponent<SpriteRenderer>();
         }
-        lastSeason = (int)Player.actualSeason;
+        render.sprite = top;
+        StartCoroutine(SeasonUpdate());
     }
 
-    private void changeState() {
-        switch (curState) {
-            case State.Growing:
-                gameObject.GetComponent<MeshRenderer>().enabled = true;
-                gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                RaycastHit2D upperBounding = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.up, 1f);
-                Debug.DrawRay(transform.position, Vector3.up);
-                if (!upperBounding) {
-                    Instantiate(Vine, new Vector2(transform.position.x, transform.position.y + 1f), Quaternion.Euler(0, 0, 0));
+    IEnumerator SeasonUpdate() {
+        System.Func<bool> isSpring = ()=> Player.actualSeason == Player.Seasons.Spring;
+        System.Func<bool> isSummer = () => Player.actualSeason == Player.Seasons.Summer;
+        RaycastHit2D hit;
+        while (true)
+        {
+            // do stuff in spring
+            {
+                // check if there is anything above me
+                hit = Physics2D.Raycast(transform.position, Vector2.up, 1f);
+                Vector2 growPos = transform.position + Vector3.up;
+                if (hit || !isSpring()) { }
+                else
+                {
+                    // if free grow the vine out
+                    yield return new WaitForSeconds(0.1f);
+                    GameObject obj = Instantiate(gameObject);
+                    obj.transform.SetParent(transform.parent);
+                    obj.transform.position = transform.position + Vector3.up;
+                    render.sprite = mid;
                 }
+            }
+            // undo stuff after spring
+            yield return new WaitUntil(isSummer);
+            // if vine below
+            hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
+            if (hit)
+            {
+                name = "DummyVine";
+                yield return new WaitUntil(isMyTurnToDie);
+                render.sprite = top;
                 break;
-            case State.Burning:
-                if (gameObject.tag != "Vine")
-                    Destroy(gameObject);
-                break;
-            case State.None:
-                gameObject.GetComponent<MeshRenderer>().enabled = false;
-                gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                break;
-            default:
-                break;
+            }
+            else
+            {
+                yield return new WaitUntil(isTopVine);
+                render.sprite = top;
+            }
+            // back to spring
+            yield return new WaitUntil(isSpring);
+        }
+        Destroy(gameObject, 0.1f);
+    }
+
+    private bool isTopVine()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1f);
+        if (hit && hit.collider.GetComponent<TileBehaviour_Vine>() != null)
+        {
+            // not top vine collides with a vine on top
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 
-    public void Init()
+    private bool isMyTurnToDie()
     {
-        throw new NotImplementedException();
+        if (Player.actualSeason == Player.Seasons.Spring)
+        {
+            return true;
+        }
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1f);
+        if (hit) //if something above
+        {
+            if (hit.collider.GetComponent<TileBehaviour_Vine>() != null)
+            {
+                //if its a vine dont die yet
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void OnDeath()
+    {
+        StopAllCoroutines(); 
     }
 }

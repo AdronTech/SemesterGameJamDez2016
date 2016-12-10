@@ -4,60 +4,109 @@ using UnityEngine;
 
 public class TileBehaviour_Corn : MonoBehaviour {
 
-    public GameObject Corn;
-    private int lastSeason = 0;
-    private enum State { Low, Mid, High, None };
-    private State curState = State.None;
-    private Dictionary<Player.Seasons, State> states = new Dictionary<Player.Seasons, State>();
+    public Sprite top, middle, bottom;
+    private SpriteRenderer topRenderer, middleRenderer, bottmoRenderer;
+    private Transform topTransform, middleTransform;
 
     void Awake() {
-        states.Add(Player.Seasons.Spring, State.Mid);
-        states.Add(Player.Seasons.Summer, State.High);
-        states.Add(Player.Seasons.Autumn, State.None);
-        states.Add(Player.Seasons.Winter, State.Low);
+
+        // Bottom
+        GameObject bottomGo = new GameObject("Bottom");
+        bottmoRenderer = bottomGo.AddComponent<SpriteRenderer>();
+        bottomGo.transform.SetParent(transform);
+        bottomGo.transform.position = transform.position;
+
+        bottmoRenderer.sortingOrder = transform.childCount;
+        bottmoRenderer.sprite = bottom;
+
+        // Middle
+        GameObject middleGo = new GameObject("Middle");
+        middleRenderer = middleGo.AddComponent<SpriteRenderer>();
+        middleGo.AddComponent<BoxCollider2D>();
+        middleGo.transform.SetParent(transform);
+        middleGo.transform.position = transform.position;
+        middleTransform = middleGo.transform;
+
+        middleRenderer.sortingOrder = transform.childCount;
+        middleRenderer.sprite = middle;
+
+        // Top
+        GameObject topGo = new GameObject("Top");
+        topRenderer = topGo.AddComponent<SpriteRenderer>();
+        topGo.transform.SetParent(transform);
+        topGo.transform.position = transform.position;
+        topTransform = topGo.transform;
+
+        topRenderer.sortingOrder = transform.childCount;
+        topRenderer.sprite = top;
     }
 
-    // Use this for initialization
-    void Start() {
-        curState = states[Player.actualSeason];
-        changeState();
+    void Start()
+    {
+        StartCoroutine(TileLife());
     }
 
-    // Update is called once per frame
-    void Update() {
-        if (lastSeason != (int)Player.actualSeason) {
-            curState = states[Player.actualSeason];
-            changeState();
+    IEnumerator TileLife()
+    {
+        float height = 0;
+        Color c = Color.green;
+        float alpha = 0;
+        while (true)
+        {
+            switch (Player.actualSeason)
+            {
+                case Player.Seasons.Winter:
+                    height = 1;
+                    c = Color.green;
+                    alpha = 1;
+                    break;
+                case Player.Seasons.Spring:
+                    height = 2;
+                    c = Color.green;
+                    alpha = 1;
+                    break;
+                case Player.Seasons.Summer:
+                    height = 3;
+                    c = Color.yellow;
+                    alpha = 1;
+                    break;
+                case Player.Seasons.Autumn:
+                    height = 0;
+                    c = Color.red;
+                    alpha = 0;
+                    break;
+            }
+
+            ChangeHeight(height);
+            ChangeColor(c);
+            ChangeAlpha(alpha);
+
+            yield return 0;
         }
-        lastSeason = (int)Player.actualSeason;
+
     }
 
-    private void changeState() {
-        switch (curState) {
-            case State.Low:
-                gameObject.GetComponent<MeshRenderer>().enabled = true;
-                gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                break;
-            case State.Mid:
-                RaycastHit2D upperBounding = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.up, 1f);
-                if (!upperBounding && gameObject.tag == "Corn") {
-                    Instantiate(Corn, new Vector2(transform.position.x, transform.position.y + 1f), Quaternion.Euler(0, 0, 0));
-                }
-                break;
-            case State.High:
-                RaycastHit2D upperBoundingTwice = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1f), Vector2.up, 1f);
-                if (!upperBoundingTwice && gameObject.tag == "Corn") {
-                    Instantiate(Corn, new Vector2(transform.position.x, transform.position.y + 2f), Quaternion.Euler(0, 0, 0));
-                }
-                break;
-            case State.None:
-                if (gameObject.tag != "Corn")
-                    Destroy(gameObject);
-                gameObject.GetComponent<MeshRenderer>().enabled = false;
-                gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                break;
-            default:
-                break;
-        }
+    void ChangeHeight(float h)
+    {
+
+        middleTransform.localScale = Vector3.Lerp(middleTransform.localScale, new Vector3( 1, h, 1), 0.05f);
+        float middleY = -0.5f + middleTransform.localScale.y * 0.5f;
+        middleTransform.localPosition = new Vector3(middleTransform.localPosition.x, middleY);
+
+        float topY = middleTransform.position.y + middleTransform.localScale.y / 2 + 0.5f;
+        topTransform.position = new Vector3(topTransform.position.x, topY);
     }
+
+    void ChangeColor(Color c)
+    {
+        topRenderer.color = Color.Lerp(topRenderer.color, c, 0.05f);
+        middleRenderer.color = Color.Lerp(middleRenderer.color, c, 0.05f);
+        bottmoRenderer.color = Color.Lerp(bottmoRenderer.color, c, 0.05f);
+    }
+
+    void ChangeAlpha(float alpha)
+    {
+        topRenderer.color = Color.Lerp(topRenderer.color, new Color(topRenderer.color.r, topRenderer.color.g, topRenderer.color.b, alpha), 0.1f);
+    }
+
 }

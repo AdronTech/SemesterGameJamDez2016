@@ -4,20 +4,35 @@ using UnityEngine;
 
 public class TileBehaviour_Spawn : MonoBehaviour {
 
-    public GameObject player;
+    public GameObject playerPrefab;
 
-    // Use this for initialization
-    void Start() {
-        //player.transform.position = transform.position;
-        StartCoroutine(PlayerSpawn());
+    void Start()
+    {
+        Player player = Instantiate(playerPrefab).GetComponent<Player>();
+        if (player)
+        {
+            //spawn player
+            player.transform.position = transform.position;
+            //respawn watcher
+            StartCoroutine(PlayerRespawn(player));
+        }
+        else
+        {
+            Debug.Log("SpawnTile: Can not instantiate Player Prefab. Oh Shit.");
+        }
+
+
     }
 
-    // Update is called once per frame
-    IEnumerator PlayerSpawn() {
-        System.Func<bool> onDeath = () => Player.death;
-        yield return new WaitUntil(onDeath);
-        player.transform.position = transform.position;
-        //player died
-        yield return new WaitWhile(onDeath);
+    IEnumerator PlayerRespawn(Player player)
+    {
+        System.Func<bool> isDeth = () => Player.death;
+        while (true)
+        {
+
+            yield return new WaitUntil(isDeth);
+            player.transform.position = transform.position;
+            //respawn
+        }
     }
 }
