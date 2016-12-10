@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\TileBehaviour_Cloud.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Corn.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Grass.cs" />
+    <Compile Include="Assets\Scripts\TileBehaviour_GrassTop.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Spawn.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Vine.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Water.cs" />
