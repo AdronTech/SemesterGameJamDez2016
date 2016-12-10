@@ -17,8 +17,6 @@ public class MainMenuButtons : MonoBehaviour {
     private Text[] Buttons = new Text[3];
    
        
-    
-
     //private static Text button0text;
     //private static Text button1text;
     //private static Text button2text;
@@ -55,7 +53,7 @@ public class MainMenuButtons : MonoBehaviour {
 
         int j = 0;
         //jedes zweite ist .meta -> brauch ich nicht
-        for (i = 0; i < length / 2; i = i + 2) {
+        for (i = 0; i < (length); i = i + 2) {
             levelArray[j] = (tmp[i].Split('.'))[0];
             Debug.Log(levelArray[j]); //alle namen deer Szenen enthalten
             j++;
