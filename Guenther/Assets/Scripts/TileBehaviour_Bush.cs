@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TileBehaviour_Bush : MonoBehaviour {
 
-    private bool onFire = false;
     private int lastSeason = 0;
     private enum State { None, Burning };
     private State curState = State.None;
@@ -33,10 +32,10 @@ public class TileBehaviour_Bush : MonoBehaviour {
     private void changeState() {
         switch (curState) {
             case State.Burning:
-                onFire = true;
+                transform.gameObject.GetComponent<BoxCollider2D>().enabled = true;
                 break;
             case State.None:
-                onFire = false;
+                transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 break;
             default:
                 break;
