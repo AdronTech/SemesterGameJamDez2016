@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     public enum Seasons { Spring, Summer, Autumn, Winter };
     public MoveSettings moveSettings;
@@ -15,26 +16,31 @@ public class Player : MonoBehaviour {
     private GameObject player;
     private Vector3 velocity;
 
-    private void Awake() {
+    private void Awake()
+    {
         sidewaysInput = jumpInput = 0;
         player = this.gameObject;
         actualSeason = Seasons.Spring;
     }
 
-    private void Update() {
+    private void Update()
+    {
         GetPlayerInput();
         Run();
         Jump();
     }
 
-    private void GetPlayerInput() {
+    private void GetPlayerInput()
+    {
         sidewaysInput = Input.GetAxis(inputSettings.PLAYER_SIDEWAYS_AXIS);
         jumpInput = Input.GetAxisRaw(inputSettings.PLAYER_JUMP_AXIS);
 
         // change the season
-        if (Input.GetButtonDown("Jump")) {
+        if (Input.GetButtonDown("Jump"))
+        {
             actualSeason++;
-            if ((int)actualSeason == System.Enum.GetValues(typeof(Seasons)).Length) {
+            if ((int)actualSeason == System.Enum.GetValues(typeof(Seasons)).Length)
+            {
                 actualSeason = Seasons.Spring;
             }
             Debug.Log(actualSeason);
@@ -74,39 +80,49 @@ public class Player : MonoBehaviour {
         //player.GetComponent<Rigidbody2D>().MovePosition(transform.position + new Vector3(sidewaysInput * 0.1f * moveSettings.RunVelocity, 0));
     }
 
-    private void Jump() {
-        if (jumpInput > 0 && playerGrounded()) {
+    private void Jump()
+    {
+        if (jumpInput > 0 && playerGrounded())
+        {
             player.GetComponent<Rigidbody2D>().velocity = new Vector3(player.GetComponent<Rigidbody2D>().velocity.x, moveSettings.JumpVelocity, velocity.z);
         }
     }
 
-    private bool playerGrounded() {
-        RaycastHit2D hit = Physics2D.Raycast(player.transform.position-new Vector3(0.3f,0.0f), Vector3.down, moveSettings.DistanceToGround, moveSettings.Ground);
+    private bool playerGrounded()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(player.transform.position - new Vector3(0.3f, 0.0f), Vector3.down, moveSettings.DistanceToGround, moveSettings.Ground);
         Debug.DrawRay(player.transform.position, Vector3.down, Color.red, 1f);
         RaycastHit2D hit2 = Physics2D.Raycast(player.transform.position + new Vector3(0.3f, 0.0f), Vector3.down, moveSettings.DistanceToGround, moveSettings.Ground);
         Debug.DrawRay(player.transform.position, Vector3.down, Color.red, 1f);
-        if (hit||hit2) {
+        if (hit || hit2)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
 
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
         death = other.gameObject.tag == "death";
     }
 
     [System.Serializable]
-    public class MoveSettings {
-        public float RunVelocity = 0.8f;
-        public float JumpVelocity = 100f;
-        public float DistanceToGround = 4f;
+    public class MoveSettings
+    {
+        public float RunVelocity = 0.4f;
+        public float JumpVelocity = 6.5f;
+        public float DistanceToGround = 1.03f;
+        public float DistanceToBlockingTile = 0.53f;
         public LayerMask Ground;
     }
 
     [System.Serializable]
-    public class InputSettings {
+    public class InputSettings
+    {
         public string PLAYER_SIDEWAYS_AXIS = "Horizontal";
         public string PLAYER_JUMP_AXIS = "Vertical";
         public string PLAYER_SEASON_CHANGE = "Jump";
