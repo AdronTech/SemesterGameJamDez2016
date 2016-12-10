@@ -18,6 +18,8 @@ public class MainMenuButtons : MonoBehaviour {
     private static Text button1text;
     private static Text button2text;
 
+    private static bool isDown = false;
+
     string[] levelArray;
 
     void Awake() {
@@ -66,20 +68,19 @@ public class MainMenuButtons : MonoBehaviour {
 
             //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
             if (GUI.Button(new Rect(165 + 12 + (-165 + (165 *i)), 100 , 160, 90), "Click")) {
-
+                isDown = true;
                 switch (i)
                 {
                     case 0: button0text.enabled = true; button1text.enabled = false; button2text.enabled = false;  break;
-                    case 1: button1text.enabled = true; button0text.enabled = true; button0text.enabled = true; break;
-                    case 2: button2text.enabled = true; button0text.enabled = true; button0text.enabled = true; break;
+                    case 1: button1text.enabled = true; button0text.enabled = false; button2text.enabled = false; break;
+                    case 2: button2text.enabled = true; button0text.enabled = false; button1text.enabled = false; break;
                     default: break;
-                }
-              
-            }          
-
-        }
-        
+                }              
+            } 
+        }        
     }
+
+    //public void 
 
     // Use this for initialization
     void Start() {
@@ -89,8 +90,7 @@ public class MainMenuButtons : MonoBehaviour {
         button2text = this.transform.GetChild(4).GetComponent<Text>();
 
         button0text.enabled = false;
-        button1text.enabled = false;
-        Debug.Log(button1text.enabled);
+        button1text.enabled = false;       
         button2text.enabled = false;
 
         OnGUI();        
