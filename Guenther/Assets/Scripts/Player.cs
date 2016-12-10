@@ -42,8 +42,9 @@ public class Player : MonoBehaviour {
     }
 
     private void Run() {
-        velocity = new Vector3(sidewaysInput * moveSettings.RunVelocity, player.GetComponent<Rigidbody2D>().velocity.y);
-        player.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(velocity);
+        //velocity = new Vector3(sidewaysInput * moveSettings.RunVelocity, player.GetComponent<Rigidbody2D>().velocity.y);
+        //player.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(velocity);
+        player.transform.position += new Vector3(sidewaysInput * 0.1f * moveSettings.RunVelocity, 0);
     }
 
     private void Jump() {
@@ -53,9 +54,11 @@ public class Player : MonoBehaviour {
     }
 
     private bool playerGrounded() {
-        RaycastHit2D hit = Physics2D.Raycast(player.transform.position, Vector3.down, moveSettings.DistanceToGround, moveSettings.Ground);
+        RaycastHit2D hit = Physics2D.Raycast(player.transform.position-new Vector3(0.3f,0.0f), Vector3.down, moveSettings.DistanceToGround, moveSettings.Ground);
         Debug.DrawRay(player.transform.position, Vector3.down, Color.red, 1f);
-        if (hit) {
+        RaycastHit2D hit2 = Physics2D.Raycast(player.transform.position + new Vector3(0.3f, 0.0f), Vector3.down, moveSettings.DistanceToGround, moveSettings.Ground);
+        Debug.DrawRay(player.transform.position, Vector3.down, Color.red, 1f);
+        if (hit||hit2) {
             return true;
         } else {
             return false;
