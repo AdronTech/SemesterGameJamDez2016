@@ -14,11 +14,14 @@ public class Player : MonoBehaviour {
     private float jumpInput;
     private GameObject player;
     private Vector3 velocity;
+    private int appleCount;
+
 
     private void Awake() {
         sidewaysInput = jumpInput = 0;
         player = this.gameObject;
         actualSeason = Seasons.Spring;
+        appleCount = 0;
     }
 
     private void Update() {
@@ -65,6 +68,11 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         death = other.gameObject.tag == "death";
+        if(other.gameObject.tag == "apple")
+        {
+            appleCount++;
+            Destroy(other);
+        }
     }
 
     [System.Serializable]
