@@ -2,79 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileBehaviour_Grass : MonoBehaviour {
+public class TileBehaviour_Water : MonoBehaviour, ITile {
 
-    private static Sprite grass;
-    private SpriteRenderer sr;
+    public Sprite water, water_single, water_left, water_middle, water_right, ice;
+    private SpriteRenderer waterRenderer, iceRenderer;
 
-    // Use this for initialization
-    void Start()
-    {
-        if (grass == null)
-            grass = Resources.Load<Sprite>("Textures/grass");
-
-        Check();
-
-        StartCoroutine(TileLife());
-    }
-
-    // Update is called once per frame
-    void Update()
+    void ITile.Init()
     {
 
-    }
+        GameObject waterGO = new GameObject("Water");
+        waterRenderer = waterGO.AddComponent<SpriteRenderer>();
+        waterGO.transform.SetParent(transform);
+        waterGO.transform.position = transform.position;
+        waterRenderer.sortingOrder = transform.childCount;
 
-    void Check()
-    {
+        waterRenderer.sprite = water;
+
+        GameObject iceGO = new GameObject("Ice");
+        iceRenderer = iceGO.AddComponent<SpriteRenderer>();
+        iceGO.transform.SetParent(transform);
+        iceGO.transform.position = transform.position;
+        iceRenderer.sortingOrder = transform.childCount;
+
+
+        // ice
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1f);
 
-        if (hit)
+        if (!(hit && hit.collider.GetComponent<TileBehaviour_Base>() != null))
         {
-            if (hit.collider.GetComponent<TileBehaviour_Base>() != null)
-            {
-                return;
-            }
+            iceRenderer.sprite = ice;
         }
 
-        GameObject go = new GameObject("Grass");
-        go.AddComponent<SpriteRenderer>();
-        go.transform.SetParent(transform);
-        go.transform.position = transform.position;
-
-        sr = go.GetComponent<SpriteRenderer>();
-        sr.sprite = grass;
-    }
-
-    IEnumerator TileLife()
-    {
-        Color c = Color.white;
-        while (true)
+        // water
+        hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
+        if(hit && hit.collider.GetComponent<TileBehaviour_Base>() != null)
         {
+            bool left, right;
+            RaycastHit2D l = Physics2D.Raycast(transform.position, Vector2.left, 1f);
+            RaycastHit2D r = Physics2D.Raycast(transform.position, Vector2.left, 1f);
+            
+            left = l && l.collider.GetComponent<TileBehaviour_Water>() != null;
+            right = r && r.collider.GetComponent<TileBehaviour_Water>() != null;
 
-            switch (Player.actualSeason)
-            {
-                case Player.Seasons.Winter:
-                    c = Color.white;
-                    break;
-                case Player.Seasons.Spring:
-                case Player.Seasons.Summer:
-                    c = Color.green;
-                    break;
-                case Player.Seasons.Autumn:
-                    c = Color.yellow;
-                    break;
-            }
-
-            ChangeColor(c);
-
-            yield return 0;
+            if (left && right)
+                waterRenderer.sprite = water_middle;
+            else if(!left && right)
+                waterRenderer.sprite = water_left;
+            else if (left && !right)
+                waterRenderer.sprite = water_right;
+            else 
+                waterRenderer.sprite = water_single;
         }
 
     }
 
-    void ChangeColor(Color c)
-    {
-        if (sr != null)
-            sr.color = Color.Lerp(sr.color,c, 0.01f);
-    }
 }

@@ -2,47 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileBehaviour_Grass : MonoBehaviour {
+public class TileBehaviour_Grass : MonoBehaviour, ITile {
 
-    private static Sprite grass;
+    public Sprite grass;
     private SpriteRenderer sr;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        if (grass == null)
-            grass = Resources.Load<Sprite>("Textures/grass");
-
-        Check();
-
         StartCoroutine(TileLife());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    void Check()
+    void ITile.Init()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1f);
 
-        if (hit)
+        if (!(hit && hit.collider.GetComponent<TileBehaviour_Base>() != null))
         {
-            if (hit.collider.GetComponent<TileBehaviour_Base>() != null)
-            {
-                return;
-            }
+            GameObject go = new GameObject("Grass");
+            sr = go.AddComponent<SpriteRenderer>();
+            go.transform.SetParent(transform);
+            go.transform.position = transform.position;
+            sr.sortingOrder = transform.childCount;
+
+            sr.sprite = grass;
         }
 
-        GameObject go = new GameObject("Grass");
-        go.AddComponent<SpriteRenderer>();
-        go.transform.SetParent(transform);
-        go.transform.position = transform.position;
-
-        sr = go.GetComponent<SpriteRenderer>();
-        sr.sprite = grass;
     }
 
     IEnumerator TileLife()

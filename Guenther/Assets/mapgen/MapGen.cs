@@ -30,6 +30,11 @@ public class MapGen : ScriptableObject {
                 }
             }
         }
+
+        foreach (ITile tile in parent.GetComponentsInChildren<ITile>())
+        {
+            tile.Init();
+        } 
     }
 
     #region Inspector is stupid
