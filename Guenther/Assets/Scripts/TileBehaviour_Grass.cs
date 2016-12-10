@@ -45,6 +45,7 @@ public class TileBehaviour_Grass : MonoBehaviour {
         sr.sprite = grass;
     }
 
+<<<<<<< Updated upstream
     IEnumerator TileLife()
     {
         while (true)
@@ -60,6 +61,28 @@ public class TileBehaviour_Grass : MonoBehaviour {
             ChangeColor(Color.yellow);
 
         }
+=======
+    IEnumerator TileLife()
+    {
+        while (true)
+        {
+
+            switch (Player.actualSeason)
+            {
+                case Player.Seasons.Winter:
+                    ChangeColor(Color.white);
+                    break;
+                case Player.Seasons.Spring:
+                case Player.Seasons.Summer:
+                    ChangeColor(Color.green);
+                    break;
+                case Player.Seasons.Autumn:
+                    ChangeColor(Color.yellow);
+                    break;
+            }
+            yield return 0;
+        }
+>>>>>>> Stashed changes
     }
 
     void ChangeColor(Color c)
