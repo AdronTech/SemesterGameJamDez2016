@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour {
+
     public enum Seasons { Spring, Summer, Autumn, Winter };
     public MoveSettings moveSettings;
     public InputSettings inputSettings;
@@ -31,15 +32,19 @@ public class Player : MonoBehaviour {
         jumpInput = Input.GetAxisRaw(inputSettings.PLAYER_JUMP_AXIS);
 
         // change the season
-        if (Input.GetAxis(inputSettings.PLAYER_SEASON_CHANGE) != 0) {
+        if (Input.GetButtonDown("Jump")) {
             actualSeason++;
+            if ((int)actualSeason == System.Enum.GetValues(typeof(Seasons)).Length) {
+                actualSeason = Seasons.Spring;
+            }
+            Debug.Log(actualSeason);
         }
     }
 
     void Spawn() {
         transform.position = spawnPoint.position;
     }
-    
+
 
     void Run() {
         velocity = new Vector3(sidewaysInput * moveSettings.RunVelocity, player.GetComponent<Rigidbody2D>().velocity.y);

@@ -11,7 +11,7 @@ public class TileBehaviour_Wasser : MonoBehaviour {
 	
     IEnumerator TileLife()
     {
-        System.Func<bool> isWinter = () => Player.actualSeason == Player.seasons.winter;
+        System.Func<bool> isWinter = () => Player.actualSeason == Player.Seasons.Winter;
         yield return new WaitUntil(isWinter);
         // change to winter
         yield return new WaitWhile(isWinter);
