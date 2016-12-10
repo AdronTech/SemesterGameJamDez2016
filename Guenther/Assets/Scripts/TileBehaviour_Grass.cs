@@ -45,49 +45,36 @@ public class TileBehaviour_Grass : MonoBehaviour {
         sr.sprite = grass;
     }
 
-<<<<<<< Updated upstream
     IEnumerator TileLife()
     {
-        while (true)
-        { 
-
-            yield return new WaitUntil(() => Player.actualSeason == Player.Seasons.Winter);
-            ChangeColor(Color.white);
-
-            yield return new WaitUntil(() => Player.actualSeason == Player.Seasons.Spring);
-            ChangeColor(Color.green);
-
-            yield return new WaitUntil(() => Player.actualSeason == Player.Seasons.Autumn);
-            ChangeColor(Color.yellow);
-
-        }
-=======
-    IEnumerator TileLife()
-    {
+        Color c = Color.white;
         while (true)
         {
 
             switch (Player.actualSeason)
             {
                 case Player.Seasons.Winter:
-                    ChangeColor(Color.white);
+                    c = Color.white;
                     break;
                 case Player.Seasons.Spring:
                 case Player.Seasons.Summer:
-                    ChangeColor(Color.green);
+                    c = Color.green;
                     break;
                 case Player.Seasons.Autumn:
-                    ChangeColor(Color.yellow);
+                    c = Color.yellow;
                     break;
             }
+
+            ChangeColor(c);
+
             yield return 0;
         }
->>>>>>> Stashed changes
+
     }
 
     void ChangeColor(Color c)
     {
         if (sr != null)
-            sr.color = c;
+            sr.color = Color.Lerp(sr.color,c, 0.01f);
     }
 }
