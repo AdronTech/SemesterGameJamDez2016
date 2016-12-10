@@ -9,8 +9,10 @@ public class TileBehaviour_Wasser : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    IEnumerator TileLife()
+    {
+
+        yield return null;
+    }
+
 }
