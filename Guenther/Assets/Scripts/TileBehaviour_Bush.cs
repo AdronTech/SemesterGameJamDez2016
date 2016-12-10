@@ -42,10 +42,4 @@ public class TileBehaviour_Bush : MonoBehaviour {
                 break;
         }
     }
-    void OnTriggerEnter2D (Collider2D other) {
-        Debug.Log("Test");
-        if (onFire && other.tag == "Player") {
-            other.GetComponent<Player>().Spawn();
-        }
-    }
 }

@@ -13,14 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
-    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -80,15 +77,15 @@
     <Compile Include="Assets\Scripts\ITile.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Base.cs" />
+    <Compile Include="Assets\Scripts\TileBehaviour_Bush.cs" />
+    <Compile Include="Assets\Scripts\TileBehaviour_Cloud.cs" />
+    <Compile Include="Assets\Scripts\TileBehaviour_Corn.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Grass.cs" />
+    <Compile Include="Assets\Scripts\TileBehaviour_Spawn.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Vine.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Wasser.cs" />
     <Compile Include="Assets\Scripts\TileBehaviour_Water.cs" />
     <Compile Include="Assets\mapgen\MapGen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
-<<<<<<< HEAD
 </Project>
-=======
-</Project>
->>>>>>> master

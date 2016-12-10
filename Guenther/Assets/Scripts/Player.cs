@@ -8,8 +8,8 @@ public class Player : MonoBehaviour {
     public enum Seasons { Spring, Summer, Autumn, Winter };
     public MoveSettings moveSettings;
     public InputSettings inputSettings;
-    public Transform spawnPoint;
     public static Seasons actualSeason;
+    public static bool death;
     private float sidewaysInput;
     private float jumpInput;
     private GameObject player;
@@ -21,13 +21,13 @@ public class Player : MonoBehaviour {
         actualSeason = Seasons.Spring;
     }
 
-    void Update() {
+    private void Update() {
         GetPlayerInput();
         Run();
         Jump();
     }
 
-    void GetPlayerInput() {
+    private void GetPlayerInput() {
         sidewaysInput = Input.GetAxis(inputSettings.PLAYER_SIDEWAYS_AXIS);
         jumpInput = Input.GetAxisRaw(inputSettings.PLAYER_JUMP_AXIS);
 
@@ -40,23 +40,18 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void Spawn() {
-        transform.position = spawnPoint.position;
-    }
-
-
-    void Run() {
+    private void Run() {
         velocity = new Vector3(sidewaysInput * moveSettings.RunVelocity, player.GetComponent<Rigidbody2D>().velocity.y);
         player.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(velocity);
     }
 
-    void Jump() {
+    private void Jump() {
         if (jumpInput > 0 && playerGrounded()) {
             player.GetComponent<Rigidbody2D>().velocity = new Vector3(player.GetComponent<Rigidbody2D>().velocity.x, moveSettings.JumpVelocity, velocity.z);
         }
     }
 
-    bool playerGrounded() {
+    private bool playerGrounded() {
         RaycastHit2D hit = Physics2D.Raycast(player.transform.position, Vector3.down, moveSettings.DistanceToGround, moveSettings.Ground);
         Debug.DrawRay(player.transform.position, Vector3.down, Color.red, 1f);
         if (hit) {
@@ -64,8 +59,12 @@ public class Player : MonoBehaviour {
         } else {
             return false;
         }
+
     }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        death = other.gameObject.tag == "death";
+    }
 
     [System.Serializable]
     public class MoveSettings {
