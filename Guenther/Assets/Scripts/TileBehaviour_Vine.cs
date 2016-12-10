@@ -40,7 +40,7 @@ public class TileBehaviour_Vine : MonoBehaviour{
             yield return new WaitUntil(isSummer);
             // if vine below
             hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
-            if (hit)
+            if (hit && hit.collider.GetComponent<TileBehaviour_Vine>() != null)
             {
                 name = "DummyVine";
                 yield return new WaitUntil(isMyTurnToDie);
@@ -49,6 +49,7 @@ public class TileBehaviour_Vine : MonoBehaviour{
             }
             else
             {
+                name = "root";
                 yield return new WaitUntil(isTopVine);
                 render.sprite = top;
             }
