@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public InputSettings inputSettings;
     public static Seasons actualSeason;
     public static bool death;
+    private bool ClimbInVine;
     private float sidewaysInput;
     private float jumpInput;
     private GameObject player;
@@ -48,6 +49,9 @@ public class Player : MonoBehaviour
             }
             Debug.Log(actualSeason);
         }
+        if (ClimbInVine && jumpInput != 0) {
+            transform.Translate(Vector2.up * jumpInput * 0.1f);
+        }
     }
 
     private void Run()
@@ -61,9 +65,8 @@ public class Player : MonoBehaviour
             RaycastHit2D hitL2 = Physics2D.Raycast(player.transform.position, Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
             RaycastHit2D hitL3 = Physics2D.Raycast(player.transform.position - new Vector3(0.0f, 0.9f), Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
             if (hitL1 || hitL2 || hitL3) TileHit = true;
-        }
-        else if (velocity.x > 0) //moving to right 
-        {
+        } else if (velocity.x > 0) //moving to right 
+          {
             RaycastHit2D hitR1 = Physics2D.Raycast(player.transform.position + new Vector3(0.0f, 0.9f), Vector3.right, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
             RaycastHit2D hitR2 = Physics2D.Raycast(player.transform.position, Vector3.right, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
             RaycastHit2D hitR3 = Physics2D.Raycast(player.transform.position - new Vector3(0.0f, 0.9f), Vector3.right, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
@@ -116,14 +119,20 @@ public class Player : MonoBehaviour
             appleCount++;
             Destroy(other);
         }
+
+    }
+
+    private void OnTriggerStay2D(Collider2D other) {
         if (other.GetComponent<TileBehaviour_Vine>()) {
             Physics2D.gravity = new Vector2(0f, 0f);
+            ClimbInVine = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.GetComponent<TileBehaviour_Vine>()) {
             Physics2D.gravity = new Vector2(0f, -9.81f);
+            ClimbInVine = false;
         }
     }
 

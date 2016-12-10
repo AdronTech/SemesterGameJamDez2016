@@ -14,7 +14,14 @@ public class MainMenuButtons : MonoBehaviour {
     //array aus szenen
     //so viele buttons erstellen
 
-    public static Text text;
+    private Text[] Buttons = new Text[3];
+   
+       
+    //private static Text button0text;
+    //private static Text button1text;
+    //private static Text button2text;
+
+    private static int isDown = -1;
 
     string[] levelArray;
 
@@ -46,7 +53,7 @@ public class MainMenuButtons : MonoBehaviour {
 
         int j = 0;
         //jedes zweite ist .meta -> brauch ich nicht
-        for (i = 0; i < length / 2; i = i + 2) {
+        for (i = 0; i < (length); i = i + 2) {
             levelArray[j] = (tmp[i].Split('.'))[0];
             Debug.Log(levelArray[j]); //alle namen deer Szenen enthalten
             j++;
@@ -55,8 +62,7 @@ public class MainMenuButtons : MonoBehaviour {
        
     }
 
-    void OnGUI() {
-        
+   private void OnGUI() {  
 
 
         for(int i = 0; i < levelArray.Length; i++){
@@ -65,19 +71,36 @@ public class MainMenuButtons : MonoBehaviour {
 
             //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
             if (GUI.Button(new Rect(165 + 12 + (-165 + (165 *i)), 100 , 160, 90), "Click")) {
-            Debug.Log("Button" + i +" Clicked");
-                Debug.Log("Button" + i + " Clicked");
-                Debug.Log("Button" + i + " Clicked");
-            }          
+                isDown = i;
+                switch (i)
+                {
+                    case 0: Buttons[0].enabled = true; Buttons[1].enabled = false; Buttons[2].enabled = false;  break;
+                    case 1: Buttons[1].enabled = true; Buttons[0].enabled = false; Buttons[2].enabled = false; break;
+                    case 2: Buttons[2].enabled = true; Buttons[0].enabled = false; Buttons[1].enabled = false; break;
+                    default: break;
+                }              
+            } 
+        }        
+    }
 
-        }
+    public void LoadByIndex()
+    {
+        if(isDown!=-1)
+        SceneManager.LoadScene(levelArray[isDown]);
     }
 
     // Use this for initialization
     void Start() {
-        OnGUI();
 
-        
+        Buttons[0] = this.transform.GetChild(2).GetComponent<Text>();
+        Buttons[1] = this.transform.GetChild(3).GetComponent<Text>();
+        Buttons[2] = this.transform.GetChild(4).GetComponent<Text>();
+
+        Buttons[0].enabled = false;
+        Buttons[1].enabled = false;
+        Buttons[2].enabled = false;
+
+        OnGUI();        
     }
 
     // Update is called once per frame

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileBehaviour_Corn : MonoBehaviour {
+public class TileBehaviour_Corn : MonoBehaviour
+{
 
     public Sprite top, middle, bottom;
+    public float BuildSpeed;
     private SpriteRenderer topRenderer, middleRenderer, bottmoRenderer;
     private Transform topTransform, middleTransform;
 
-    void Awake() {
+    void Awake()
+    {
 
         // Bottom
         GameObject bottomGo = new GameObject("Bottom");
@@ -23,6 +26,7 @@ public class TileBehaviour_Corn : MonoBehaviour {
         GameObject middleGo = new GameObject("Middle");
         middleRenderer = middleGo.AddComponent<SpriteRenderer>();
         middleGo.AddComponent<BoxCollider2D>();
+        middleGo.layer = 8;
         middleGo.transform.SetParent(transform);
         middleGo.transform.position = transform.position;
         middleTransform = middleGo.transform;
@@ -89,7 +93,7 @@ public class TileBehaviour_Corn : MonoBehaviour {
     void ChangeHeight(float h)
     {
 
-        middleTransform.localScale = Vector3.Lerp(middleTransform.localScale, new Vector3( 1, h, 1), 0.05f);
+        middleTransform.localScale = Vector3.Lerp(middleTransform.localScale, new Vector3(1, h, 1), BuildSpeed);
         float middleY = -0.5f + middleTransform.localScale.y * 0.5f;
         middleTransform.localPosition = new Vector3(middleTransform.localPosition.x, middleY);
 
@@ -99,14 +103,14 @@ public class TileBehaviour_Corn : MonoBehaviour {
 
     void ChangeColor(Color c)
     {
-        topRenderer.color = Color.Lerp(topRenderer.color, c, 0.05f);
-        middleRenderer.color = Color.Lerp(middleRenderer.color, c, 0.05f);
-        bottmoRenderer.color = Color.Lerp(bottmoRenderer.color, c, 0.05f);
+        topRenderer.color = Color.Lerp(topRenderer.color, c, BuildSpeed);
+        middleRenderer.color = Color.Lerp(middleRenderer.color, c, BuildSpeed);
+        bottmoRenderer.color = Color.Lerp(bottmoRenderer.color, c, BuildSpeed);
     }
 
     void ChangeAlpha(float alpha)
     {
-        topRenderer.color = Color.Lerp(topRenderer.color, new Color(topRenderer.color.r, topRenderer.color.g, topRenderer.color.b, alpha), 0.1f);
+        topRenderer.color = Color.Lerp(topRenderer.color, new Color(topRenderer.color.r, topRenderer.color.g, topRenderer.color.b, alpha), 2 * BuildSpeed);
     }
 
 }
