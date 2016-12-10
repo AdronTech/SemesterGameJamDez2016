@@ -41,10 +41,37 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void Run() {
-        //velocity = new Vector3(sidewaysInput * moveSettings.RunVelocity, player.GetComponent<Rigidbody2D>().velocity.y);
-        //player.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(velocity);
-        player.transform.position += new Vector3(sidewaysInput * 0.1f * moveSettings.RunVelocity, 0);
+    private void Run()
+    {
+
+        velocity = new Vector3(sidewaysInput * moveSettings.RunVelocity * 10.0f, player.GetComponent<Rigidbody2D>().velocity.y);
+        bool TileHit = false;
+        if (velocity.x < 0)//moving to right
+        {
+            RaycastHit2D hitL1 = Physics2D.Raycast(player.transform.position + new Vector3(0.0f, 0.9f), Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
+            RaycastHit2D hitL2 = Physics2D.Raycast(player.transform.position, Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
+            RaycastHit2D hitL3 = Physics2D.Raycast(player.transform.position - new Vector3(0.0f, 0.9f), Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
+            if (hitL1 || hitL2 || hitL3) TileHit = true;
+        }
+        else if (velocity.x > 0) //moving to right 
+        {
+            RaycastHit2D hitR1 = Physics2D.Raycast(player.transform.position + new Vector3(0.0f, 0.9f), Vector3.right, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
+            RaycastHit2D hitR2 = Physics2D.Raycast(player.transform.position, Vector3.right, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
+            RaycastHit2D hitR3 = Physics2D.Raycast(player.transform.position - new Vector3(0.0f, 0.9f), Vector3.right, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
+            if (hitR1 || hitR2 || hitR3) TileHit = true;
+        }
+
+        if (!TileHit)
+        {
+            player.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(velocity);
+        }
+        else
+        {
+            velocity = new Vector3(0, player.GetComponent<Rigidbody2D>().velocity.y);
+
+            player.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(velocity);
+        }
+        //player.GetComponent<Rigidbody2D>().MovePosition(transform.position + new Vector3(sidewaysInput * 0.1f * moveSettings.RunVelocity, 0));
     }
 
     private void Jump() {
