@@ -26,6 +26,7 @@ public class TileBehaviour_Water : MonoBehaviour, ITile {
 
         waterRenderer.sortingOrder = transform.childCount;
         waterRenderer.sprite = water;
+        waterRenderer.color = new Color(1/255f, 45 / 255f, 83 / 255f);
 
         GameObject iceGO = new GameObject("Ice");
         iceRenderer = iceGO.AddComponent<SpriteRenderer>();
