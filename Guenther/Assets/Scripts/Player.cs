@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.IO;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -21,8 +21,9 @@ public class Player : MonoBehaviour
     private GameObject player;
     private Vector3 velocity;
     private int appleCount;
-   
-    
+
+    private static Text appleNumber;
+    //private static  
 
     private void Awake()
     {
