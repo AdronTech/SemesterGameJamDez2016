@@ -10,7 +10,7 @@ public void LoadFloIstDumm(int level)
         SceneManager.LoadScene(level);
     }
 
-    public void quit()
+    public void Quit()
     {
         Application.Quit();
     }

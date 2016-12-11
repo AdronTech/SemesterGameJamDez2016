@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class TileBehaviour_Victory : MonoBehaviour {
 
-	void OnTriggerEnter(Collider2D other)
+	void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             SceneManager.LoadScene(4); 
         }
