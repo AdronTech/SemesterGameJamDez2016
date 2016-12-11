@@ -1,11 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
-<<<<<<< Updated upstream
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guenther", "Guenther.csproj", "{95465B27-101D-9495-9ED0-2D3F6D07A2A8}"
-=======
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guenther.CSharp", "Guenther.CSharp.csproj", "{D9A92CE6-DD54-67FC-5EED-272BA11471F4}"
->>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
