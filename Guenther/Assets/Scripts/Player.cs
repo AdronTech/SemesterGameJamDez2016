@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private GameObject player;
     private Vector3 velocity;
     private int appleCount;
-
+   
 
 
     private void Awake()
@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
 
     void Start() {
         anim = this.GetComponent<Animator>();
+     
     }
 
     private void Update()
@@ -144,6 +145,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "apple")
         {
             appleCount++;
+            AppleManager.Instance.Applenr++;
             Destroy(other.gameObject);
         }
 
