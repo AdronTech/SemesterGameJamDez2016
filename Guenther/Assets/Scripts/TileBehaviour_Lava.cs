@@ -7,8 +7,8 @@ public class TileBehaviour_Lava : MonoBehaviour, ITile {
     public Sprite lava, lava_single, lava_left, lava_middle, lava_right;
     private SpriteRenderer sr;
 
-    void Awake() {
-        transform.tag = "death";
+    void Start() {
+        gameObject.tag = "death";
     }
 
     void ITile.Init()

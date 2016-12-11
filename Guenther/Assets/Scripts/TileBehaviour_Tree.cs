@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TileBehaviour_Tree : MonoBehaviour {
+
+    public ParticleSystem leaf;
+    
     public GameObject apple;
     private int lastSeason = 0;
     private bool applePlaced = false; 
