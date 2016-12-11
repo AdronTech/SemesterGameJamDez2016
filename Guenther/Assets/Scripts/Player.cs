@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "apple")
         {
             appleCount++;
-            Destroy(other);
+            Destroy(other.gameObject);
         }
 
     }
