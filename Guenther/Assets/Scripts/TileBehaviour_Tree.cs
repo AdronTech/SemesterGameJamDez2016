@@ -39,6 +39,7 @@ public class TileBehaviour_Tree : MonoBehaviour {
             if (!applePlaced)
             {
                 apple.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                apple.GetComponent<BoxCollider2D>().enabled = false;
                 apples[0] = Instantiate(apple, new Vector2(transform.position.x - 0.75f, transform.position.y + 2f), new Quaternion(0, 0, 0, 0));
                 apples[1] = Instantiate(apple, new Vector2(transform.position.x, transform.position.y + 3f), new Quaternion(0, 0, 0, 0));
                 apples[2] = Instantiate(apple, new Vector2(transform.position.x + 0.75f, transform.position.y + 2f), new Quaternion(0, 0, 0, 0));
@@ -53,6 +54,7 @@ public class TileBehaviour_Tree : MonoBehaviour {
                 foreach (GameObject app in apples)
                 {
                     app.GetComponent<Rigidbody2D>().gravityScale = 1f;
+                    app.GetComponent<BoxCollider2D>().enabled = true;
                 }
                 applePlaced = true;
             }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.IO;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -21,7 +23,6 @@ public class Player : MonoBehaviour
     private int appleCount;
    
 
-
     private void Awake()
     {
         sidewaysInput = jumpInput = 0;
@@ -37,9 +38,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        GetPlayerInput();
-        Run();
-        Jump();
+        if (!death) {
+            GetPlayerInput();
+            Run();
+            Jump();
+        }
     }
 
     private void GetPlayerInput()
