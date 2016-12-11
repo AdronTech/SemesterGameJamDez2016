@@ -47,10 +47,15 @@ public class Player : MonoBehaviour
             {
                 actualSeason = Seasons.Spring;
             }
+
         }
         if (ClimbInVine && jumpInput != 0)
         {
             transform.Translate(Vector2.up * jumpInput * 0.1f);
+        }
+        if (actualSeason == Seasons.Summer) {
+            Physics2D.gravity = new Vector2(0f, -9.81f);
+            ClimbInVine = false;
         }
     }
 
