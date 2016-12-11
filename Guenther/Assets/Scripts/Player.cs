@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other) {
         if (other.GetComponent<TileBehaviour_Vine>()) {
             Physics2D.gravity = new Vector2(0f, 0f);
-            gameObject.transform
+            //gameObject.transform
             ClimbInVine = true;
         }
     }
