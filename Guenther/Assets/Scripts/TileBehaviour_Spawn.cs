@@ -31,8 +31,9 @@ public class TileBehaviour_Spawn : MonoBehaviour {
         {
 
             yield return new WaitUntil(isDeth);
-            player.transform.position = transform.position;
+            player.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
             //respawn
+            Player.death = false;
         }
     }
 }
