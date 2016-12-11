@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private Vector3 velocity;
     private int appleCount;
    
+    
 
     private void Awake()
     {
