@@ -9,10 +9,10 @@ public class TileBehaviour_Lava : MonoBehaviour, ITile {
 
     void Start() {
         gameObject.tag = "death";
+        gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
     }
 
-    void ITile.Init()
-    {
+    void ITile.Init() {
 
         GameObject go = new GameObject("Lava");
         sr = go.AddComponent<SpriteRenderer>();
@@ -25,8 +25,7 @@ public class TileBehaviour_Lava : MonoBehaviour, ITile {
 
         // water
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
-        if (!(hit && hit.collider.GetComponent<TileBehaviour_Lava>() != null))
-        {
+        if (!(hit && hit.collider.GetComponent<TileBehaviour_Lava>() != null)) {
             bool left, right;
             RaycastHit2D l = Physics2D.Raycast(transform.position, Vector2.left, 1f);
             RaycastHit2D r = Physics2D.Raycast(transform.position, Vector2.right, 1f);

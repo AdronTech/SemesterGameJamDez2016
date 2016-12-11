@@ -6,17 +6,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    private Animator anim;
     public enum Seasons { Spring, Summer, Autumn, Winter };
     public MoveSettings moveSettings;
     public InputSettings inputSettings;
     public static Seasons actualSeason;
     public static bool death;
     private bool ClimbInVine;
+    private bool faceToRight = true;
     private float sidewaysInput;
     private float jumpInput;
     private GameObject player;
     private Vector3 velocity;
     private int appleCount;
+   
 
 
     private void Awake()
@@ -25,6 +28,11 @@ public class Player : MonoBehaviour
         player = this.gameObject;
         actualSeason = Seasons.Spring;
         appleCount = 0;
+    }
+
+    void Start() {
+        anim = this.GetComponent<Animator>();
+     
     }
 
     private void Update()
@@ -64,12 +72,16 @@ public class Player : MonoBehaviour
 
         velocity = new Vector3(sidewaysInput * moveSettings.RunVelocity * 10.0f, player.GetComponent<Rigidbody2D>().velocity.y);
         bool TileHit = false;
-        if (velocity.x < 0)//moving to right
+        if (velocity.x < 0)//moving to left
         {
-            RaycastHit2D hitL1 = Physics2D.Raycast(player.transform.position + new Vector3(0.0f, 0.9f), Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
+            RaycastHit2D hitL1 = Physics2D.Raycast(player.transform.position + new Vector3(0.0f, 0.95f), Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
             RaycastHit2D hitL2 = Physics2D.Raycast(player.transform.position, Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
-            RaycastHit2D hitL3 = Physics2D.Raycast(player.transform.position - new Vector3(0.0f, 0.9f), Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
+            RaycastHit2D hitL3 = Physics2D.Raycast(player.transform.position - new Vector3(0.0f, 0.95f), Vector3.left, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
             if (hitL1 || hitL2 || hitL3) TileHit = true;
+            if (faceToRight) {
+                faceToRight = false;
+                gameObject.transform.localScale = new Vector3(-1f * transform.localScale.x,transform.lossyScale.y,transform.lossyScale.z);
+            }
         }
         else if (velocity.x > 0) //moving to right 
         {
@@ -77,6 +89,10 @@ public class Player : MonoBehaviour
             RaycastHit2D hitR2 = Physics2D.Raycast(player.transform.position, Vector3.right, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
             RaycastHit2D hitR3 = Physics2D.Raycast(player.transform.position - new Vector3(0.0f, 0.9f), Vector3.right, moveSettings.DistanceToBlockingTile, moveSettings.Ground);
             if (hitR1 || hitR2 || hitR3) TileHit = true;
+            if (!faceToRight) {
+                faceToRight = true;
+                gameObject.transform.localScale = new Vector3(-1f * transform.localScale.x, transform.lossyScale.y, transform.lossyScale.z);
+            }
         }
 
         if (!TileHit)
@@ -120,10 +136,17 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         death = other.gameObject.tag == "death";
+
+        //hier stirbt er 
+        if(death)
+        anim.SetBool("isDead", true);
+        Debug.Log(anim.GetBool("isDead"));
+
         if (other.gameObject.tag == "apple")
         {
             appleCount++;
-            Destroy(other);
+            AppleManager.Instance.Applenr++;
+            Destroy(other.gameObject);
         }
 
     }

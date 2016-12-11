@@ -43,8 +43,11 @@ public class TileBehaviour_Spawn : MonoBehaviour {
         while (true)
         {
             yield return new WaitUntil(isDeth);
-            player.transform.position = transform.position;
+            yield return new WaitForSeconds(7);
+            player.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
             //respawn
+            player.GetComponent<Animator>().SetBool("isDead", false);
+           Player.death = false;
         }
     }
 }
