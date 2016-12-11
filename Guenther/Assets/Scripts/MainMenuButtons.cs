@@ -15,8 +15,13 @@ public class MainMenuButtons : MonoBehaviour {
     //so viele buttons erstellen
 
     private Text[] Buttons = new Text[3];
-   
-       
+
+    public Texture texture0;
+    public Texture texture1;
+    public Texture texture2;
+
+    private Texture[] textures = new Texture[3];
+    
     //private static Text button0text;
     //private static Text button1text;
     //private static Text button2text;
@@ -70,8 +75,10 @@ public class MainMenuButtons : MonoBehaviour {
             //GUI.Label(new Rect(0 + i*10, 0, 100, 100), "I'm a GUI");
 
             //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
-            if (GUI.Button(new Rect(165 + 12 + (-165 + (165 *i)), 100 , 160, 90), "Click")) {
+            if (GUI.Button(new Rect(200 + (-100 + (600 *i)), 280 , 500, 290), textures[i])) {
                 isDown = i;
+
+
                 switch (i)
                 {
                     case 0: Buttons[0].enabled = true; Buttons[1].enabled = false; Buttons[2].enabled = false;  break;
@@ -92,6 +99,10 @@ public class MainMenuButtons : MonoBehaviour {
     // Use this for initialization
     void Start() {
 
+        textures[0] = texture0;
+        textures[1] = texture1;
+        textures[2] = texture2;
+
         Buttons[0] = this.transform.GetChild(2).GetComponent<Text>();
         Buttons[1] = this.transform.GetChild(3).GetComponent<Text>();
         Buttons[2] = this.transform.GetChild(4).GetComponent<Text>();
@@ -100,7 +111,9 @@ public class MainMenuButtons : MonoBehaviour {
         Buttons[1].enabled = false;
         Buttons[2].enabled = false;
 
-        OnGUI();        
+        OnGUI();     
+        
+           
     }
 
     // Update is called once per frame
