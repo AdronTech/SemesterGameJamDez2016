@@ -77,21 +77,25 @@ public class TileBehaviour_Water : MonoBehaviour, ITile {
                     icealpha = 1f;
                     gameObject.layer = 8;
                     gameObject.tag = "Untagged";
+                    gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
                     break;
                 case Player.Seasons.Spring:
                     icealpha = 0f;
                     gameObject.layer = 0;
                     gameObject.tag = "death";
+                    gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
                     break;
                 case Player.Seasons.Summer:
                     icealpha = 0f;
                     gameObject.layer = 0;
                     gameObject.tag = "death";
+                    gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
                     break;
                 case Player.Seasons.Autumn:
                     icealpha = 0f;
                     gameObject.layer = 0;
                     gameObject.tag = "death";
+                    gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
                     break;
             }
 

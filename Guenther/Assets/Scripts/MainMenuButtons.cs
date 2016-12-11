@@ -6,12 +6,14 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.UI;
 
+
+
 public class MainMenuButtons : MonoBehaviour {
 
     //schaue wie viele levels im levels 
     //in Awake
     //array erstellen
-    //array aus szenen
+    //array aus Szenen
     //so viele buttons erstellen
 
     private Text[] Buttons = new Text[3];
@@ -75,7 +77,7 @@ public class MainMenuButtons : MonoBehaviour {
             //GUI.Label(new Rect(0 + i*10, 0, 100, 100), "I'm a GUI");
 
             //gebe namen dem button den indix an im array -> lade szene im array am index mit dem namen vom wert im array drin
-            if (GUI.Button(new Rect(200 + (-100 + (600 *i)), 280 , 500, 290), textures[i])) {
+            if (GUI.Button(new Rect(150 + (-100 + (540 *i)), 280 , 500, 290), textures[i])) {
                 isDown = i;
 
 
