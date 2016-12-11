@@ -5,7 +5,7 @@ using UnityEngine;
 public class AppleManager {
 
     private static AppleManager instance;
-    private int applenr;
+    private int applenr = 0;
 
     private AppleManager() {
         //sicher gehen, dass nur eine instanz erschaffen

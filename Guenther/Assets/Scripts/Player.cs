@@ -23,7 +23,12 @@ public class Player : MonoBehaviour
     private int appleCount;
 
     private static Text appleNumber;
-    //private static  
+
+
+    public static void UpdateStats() {
+        appleNumber.text = "Score: " + AppleManager.Instance.Applenr.ToString();  
+    }
+
 
     private void Awake()
     {
@@ -31,11 +36,14 @@ public class Player : MonoBehaviour
         player = this.gameObject;
         actualSeason = Seasons.Spring;
         appleCount = 0;
+        AppleManager.Instance.Applenr = 0;
     }
 
     void Start() {
         anim = this.GetComponent<Animator>();
-     
+        appleNumber = GameObject.Find("Canvas").GetComponent<Text>();
+        UpdateStats();
+
     }
 
     private void Update()
@@ -151,6 +159,7 @@ public class Player : MonoBehaviour
         {
             appleCount++;
             AppleManager.Instance.Applenr++;
+            UpdateStats();
             Destroy(other.gameObject);
         }
 
