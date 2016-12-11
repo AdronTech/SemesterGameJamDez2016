@@ -13,7 +13,7 @@ public class MainMenuButtons : MonoBehaviour {
     //schaue wie viele levels im levels 
     //in Awake
     //array erstellen
-    //array aus szenen
+    //array aus Szenen
     //so viele buttons erstellen
 
     private Text[] Buttons = new Text[3];
