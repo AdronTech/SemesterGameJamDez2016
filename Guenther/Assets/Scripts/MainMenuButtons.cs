@@ -22,7 +22,7 @@ public class MainMenuButtons : MonoBehaviour {
 
     private Texture[] textures = new Texture[3];
     
-    //private static Text button0text;
+    //private static Text button0text; 
     //private static Text button1text;
     //private static Text button2text;
 
