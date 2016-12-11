@@ -61,22 +61,22 @@ public class TileBehaviour_Corn : MonoBehaviour
             {
                 case Player.Seasons.Winter:
                     height = 1;
-                    c = Color.green;
+                    c = new Color(150 / 255f, 149 / 255f, 44 / 255f);
                     alpha = 1;
                     break;
                 case Player.Seasons.Spring:
                     height = 2;
-                    c = Color.green;
+                    c = new Color(89 / 255f, 133 / 255f, 47 / 255f);
                     alpha = 1;
                     break;
                 case Player.Seasons.Summer:
                     height = 3;
-                    c = Color.yellow;
+                    c = new Color(248 / 255f, 162 / 255f, 10 / 255f);
                     alpha = 1;
                     break;
                 case Player.Seasons.Autumn:
                     height = 0;
-                    c = Color.red;
+                    c = new Color(145 / 255f, 120 / 255f, 90 / 255f);
                     alpha = 0;
                     break;
             }
