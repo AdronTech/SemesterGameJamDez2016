@@ -24,7 +24,7 @@ public class TileBehaviour_Victory : MonoBehaviour {
         src.clip = victorySound;
         src.loop = false;
         src.Play();
-        yield return new WaitForSeconds(1);
+        yield return new WaitWhile(()=>src.isPlaying);
         SceneManager.LoadScene(4);
     }
 }
