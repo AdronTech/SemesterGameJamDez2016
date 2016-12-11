@@ -11,13 +11,15 @@ public class TileBehaviour_Bush : MonoBehaviour {
         fire.Stop();
         leaf.Stop();
         StartCoroutine(TileLife());
+        gameObject.tag = "death";
     }
 
     IEnumerator TileLife()
     {
         while(true)
         {
-            transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            transform.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            transform.gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
 
             switch (Player.actualSeason)
             {
@@ -25,7 +27,7 @@ public class TileBehaviour_Bush : MonoBehaviour {
                     leaf.Play();
                     break;
                 case Player.Seasons.Summer:
-                    transform.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                    transform.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
                     leaf.Stop();
                     fire.Play();
                     break;
