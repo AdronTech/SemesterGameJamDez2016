@@ -28,6 +28,8 @@ public class TileBehaviour_Spawn : MonoBehaviour {
     IEnumerator AudioStart()
     {
         AudioSource src = GetComponent<AudioSource>();
+        if (src == null)
+            src = gameObject.AddComponent<AudioSource>();
         src.loop = false;
         src.clip = voiceIntro;
         src.Play();
