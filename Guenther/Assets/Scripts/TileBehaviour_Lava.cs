@@ -9,6 +9,7 @@ public class TileBehaviour_Lava : MonoBehaviour, ITile {
 
     void Start() {
         gameObject.tag = "death";
+        gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
     }
 
     void ITile.Init()
