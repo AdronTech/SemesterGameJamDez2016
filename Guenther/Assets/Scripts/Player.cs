@@ -21,12 +21,25 @@ public class Player : MonoBehaviour
     private GameObject player;
     private Vector3 velocity;
     private int appleCount;
-
     private static Text appleNumber;
 
 
+    public AudioSource steps, pickup, deathSounds;
+
+    IEnumerator StepSounds() {
+        while (true) {
+            if(playerGrounded() && Mathf.Abs(sidewaysInput) > 0) 
+            {
+                steps.Play();
+            } else {
+                steps.Pause();
+            }
+            yield return null;
+        }
+    }
+
     public static void UpdateStats() {
-        appleNumber.text = "Score: " + AppleManager.Instance.Applenr.ToString();  
+        appleNumber.text = AppleManager.Instance.Applenr.ToString();  
     }
 
 
@@ -36,18 +49,19 @@ public class Player : MonoBehaviour
         player = this.gameObject;
         actualSeason = Seasons.Spring;
         appleCount = 0;
-        AppleManager.Instance.Applenr = 0;
+        
     }
 
     void Start() {
         anim = this.GetComponent<Animator>();
-        appleNumber = GameObject.Find("Canvas").GetComponent<Text>();
+        appleNumber = GameObject.Find("Text").GetComponent<Text>();
         UpdateStats();
 
     }
 
     private void Update()
     {
+
         if (!death) {
             GetPlayerInput();
             Run();
@@ -151,12 +165,16 @@ public class Player : MonoBehaviour
         death = other.gameObject.tag == "death";
 
         //hier stirbt er 
-        if(death)
-        anim.SetBool("isDead", true);
+        if (death) {
+            anim.SetBool("isDead", true);
+            deathSounds.Play();
+        }
+
         Debug.Log(anim.GetBool("isDead"));
 
         if (other.gameObject.tag == "apple")
         {
+            pickup.Play();
             appleCount++;
             AppleManager.Instance.Applenr++;
             UpdateStats();
