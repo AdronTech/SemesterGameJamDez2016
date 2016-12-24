@@ -25,6 +25,6 @@ public class TileBehaviour_Victory : MonoBehaviour {
         src.loop = false;
         src.Play();
         yield return new WaitWhile(()=>src.isPlaying);
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("Zwischenszene");
     }
 }

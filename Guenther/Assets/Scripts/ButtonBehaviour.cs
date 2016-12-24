@@ -5,7 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class ButtonBehaviour : MonoBehaviour {
 
-public void LoadFloIstDumm(int level)
+    public void LoadLevel(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
+    }
+
+    public void LoadLevel(int level)
     {
         SceneManager.LoadScene(level);
     }
